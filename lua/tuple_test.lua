@@ -1,0 +1,32 @@
+local tuple = require("tuple")
+local function t(...)
+  return tuple.Tuple:new(table.pack(...))
+end
+
+assert(t(1, 1) == t(1, 1))
+assert(t(1, 1) ~= t(1, 2))
+assert(t(1, 1) ~= t(2, 1))
+assert(t(1, 1) ~= t(1, 1, 1))
+assert(t(1, 1) ~= t(1))
+
+assert(t(1, 1) < t(2, 1))
+assert(t(1, 1) < t(1, 2))
+assert(t(1, 1) < t(1, 1, 1))
+assert(not (t(1, 1) < t(1, 1)))
+assert(not (t(2, 1) < t(1, 1)))
+assert(not (t(1, 2) < t(1, 1)))
+
+assert(not (t(1, 1) > t(1, 1)))
+assert(not (t(1, 1) > t(2, 1)))
+assert(not (t(1, 1) > t(1, 2)))
+assert(t(2, 1) > t(1, 1))
+assert(t(1, 2) > t(1, 1))
+
+assert(t(1, 1) <= t(1, 1))
+assert(t(1, 1) <= t(1, 1, 1))
+assert(t(1, 1) <= t(1, 2))
+assert(t(1, 1) <= t(2, 1))
+assert(t(1, 1) >= t(1, 1))
+assert(t(1, 1, 1) >= t(1, 1))
+assert(t(1, 2) >= t(1, 1))
+assert(t(2, 1) >= t(1, 1))
