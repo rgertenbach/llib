@@ -18,6 +18,8 @@ function M.Heap:new(t, key)
   return t
 end
 
+---Reorder the heap from the bottom up. Used after inserting.
+---@param i integer? The index to heapify. Defaults to the last element.
 function M.Heap:heapify_up(i)
   i = i or #self
   if i <= 1 then return end
@@ -29,13 +31,16 @@ function M.Heap:heapify_up(i)
   self:heapify_up(parent)
 end
 
+
+---Adds a new element to the heap.
+---@param x any The element to add.
 function M.Heap:push(x)
   table.insert(self, x)
   self:heapify_up()
 end
 
 ---Heapifies a table top down (when initalizing or popping).
----@param i any? The index where to start (1 based, defaults to 1).
+---@param i any? The index where to start. Defaults to the first element.
 function M.Heap:heapify_down(i)
   i = i or 1
   if i >= #self then return end
@@ -56,6 +61,9 @@ function M.Heap:heapify_down(i)
   end
 end
 
+---Removes and returns an item from the heap.
+---@param i integer? Which item to remove, defaults to the smallest item.
+---@return any # The item from the stack.
 function M.Heap:pop(i)
   i = i or 1
   local ret = self[i]
@@ -65,6 +73,7 @@ function M.Heap:pop(i)
   return ret
 end
 
+---Sets up a table to be a heap.
 function M.Heap:heapify()
   for i = 1, #self do
     self:heapify_down(i)
